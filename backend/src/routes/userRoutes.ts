@@ -16,7 +16,6 @@ class UserRoutes {
     this.router.post(
       "/register",
       ValidationMiddleware.validate(UserValidator.validateRegister),
-      authGuard(["Admin"]),
       UserController.register
     );
     this.router.post(

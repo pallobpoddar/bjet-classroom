@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import MuiAccordionSummary, { AccordionSummaryProps } from "@mui/material/AccordionSummary";
+import MuiAccordionSummary, {
+  AccordionSummaryProps,
+} from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -47,16 +49,24 @@ const Accordion = styled((props: AccordionProps) => (
 // Accordion summary styling
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "1rem", color: "inherit" }} />}
+    expandIcon={
+      <ArrowForwardIosSharpIcon sx={{ fontSize: "1rem", color: "inherit" }} />
+    }
     {...props}
   />
 ))(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(240, 240, 240, 0.9)",
+  backgroundColor:
+    theme.palette.mode === "dark"
+      ? "rgba(255, 255, 255, 0.08)"
+      : "rgba(240, 240, 240, 0.9)",
   padding: theme.spacing(2),
   flexDirection: "row-reverse",
   alignItems: "center",
   "&:hover": {
-    backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.15)" : "rgba(240, 240, 240, 1)",
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255, 255, 255, 0.15)"
+        : "rgba(240, 240, 240, 1)",
   },
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
     transform: "rotate(90deg)",
@@ -87,12 +97,12 @@ const ActionButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const StyledLink = styled('a')(({ theme }) => ({
+const StyledLink = styled("a")(({ theme }) => ({
   color: theme.palette.primary.main,
-  textDecoration: 'none',
+  textDecoration: "none",
   padding: theme.spacing(1),
-  borderRadius: '4px',
-  transition: 'background-color 0.2s, color 0.2s, box-shadow 0.2s',
+  borderRadius: "4px",
+  transition: "background-color 0.2s, color 0.2s, box-shadow 0.2s",
   "&:hover": {
     backgroundColor: theme.palette.primary.light,
     color: "#fff",
@@ -101,12 +111,10 @@ const StyledLink = styled('a')(({ theme }) => ({
 }));
 
 const ModuleList: React.FC<Props> = (props) => {
-  const theme = useTheme();
   const [expanded, setExpanded] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedModuleId, setSelectedModuleId] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [selectedModuleTitle, setSelectedModuleTitle] = useState("");
 
   // New state for lesson editing and deleting
   const [isLessonEditModalOpen, setIsLessonEditModalOpen] = useState(false);
@@ -150,7 +158,10 @@ const ModuleList: React.FC<Props> = (props) => {
     props.refetch();
   };
 
-  const handleOpenLessonEditModal = (lessonId: string, currentTitle: string) => {
+  const handleOpenLessonEditModal = (
+    lessonId: string,
+    currentTitle: string
+  ) => {
     setSelectedLessonId(lessonId);
     setSelectedLessonTitle(currentTitle);
     setIsLessonEditModalOpen(true);
@@ -160,9 +171,8 @@ const ModuleList: React.FC<Props> = (props) => {
     setIsLessonEditModalOpen(false);
   };
 
-  const handleOpenDrawer = (moduleId: string, title: string) => {
+  const handleOpenDrawer = (moduleId: string) => {
     setSelectedModuleId(moduleId);
-    setSelectedModuleTitle(title);
     setDrawerOpen(true);
   };
 
@@ -227,7 +237,7 @@ const ModuleList: React.FC<Props> = (props) => {
                   aria-label="edit module"
                   onClick={(event) => {
                     event.stopPropagation();
-                    handleOpenDrawer(module._id, module.title);
+                    handleOpenDrawer(module._id);
                   }}
                 >
                   <EditIcon />

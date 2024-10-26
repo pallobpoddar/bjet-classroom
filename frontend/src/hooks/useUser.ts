@@ -52,7 +52,11 @@ const useUser = () => {
     }
   };
 
-  const createTeachers = async (teacherData: { email: string; password: string; role: string }) => {
+  const createTeachers = async (teacherData: {
+    email: string;
+    password: string;
+    role: string;
+  }) => {
     try {
       const response = await userInstance.post("/register", teacherData, {
         headers: {
@@ -61,11 +65,35 @@ const useUser = () => {
       });
       return response.data;
     } catch (error) {
-      return { error: (error as any).response ? (error as any).response.data : (error as any).message };
+      return { error: error };
     }
   };
 
-  return { signIn, signOut, changePassword, createStudents, createTeachers };
+  const signUp = async (formData: {
+    email: string;
+    password: string;
+    role: string;
+  }) => {
+    try {
+      const response = await userInstance.post("/register", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return { error: error };
+    }
+  };
+
+  return {
+    signIn,
+    signOut,
+    changePassword,
+    createStudents,
+    createTeachers,
+    signUp,
+  };
 };
 
 export default useUser;

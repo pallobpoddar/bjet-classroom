@@ -12,6 +12,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import TeacherAuth from "./middleware/TeacherAuth";
 import CreateCoursePage from "./pages/CreateCoursePage";
 import CourseHomePage from "./pages/CourseHomePage";
+import SignUpPage from "./pages/SignUpPage";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Routes>
           <Route element={<NonUserAuth />}>
             <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           </Route>
 

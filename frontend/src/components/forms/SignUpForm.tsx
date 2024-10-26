@@ -13,11 +13,10 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import CustomAlert from "../alerts/CustomAlert";
-import { useDispatch } from "react-redux";
-import { saveSignIn } from "../../redux/slices/userSlice";
 import { useNavigate, Link } from "react-router-dom";
+import Autocomplete from "@mui/material/Autocomplete";
 
-const SignInForm = () => {
+const SignUpForm = () => {
   const [showCircularProgress, setShowCircularProgress] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -37,11 +36,11 @@ const SignInForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      role: "",
     },
   });
 
-  const { signIn } = useUser();
-  const dispatch = useDispatch();
+  const { signUp } = useUser();
   const navigate = useNavigate();
 
   const handlerOnSubmit = async () => {
@@ -49,16 +48,16 @@ const SignInForm = () => {
     const formData = {
       email: getValues("email"),
       password: getValues("password"),
+      role: getValues("role"),
     };
 
-    const result = await signIn(formData);
+    const result = await signUp(formData);
     setShowCircularProgress(false);
     if (result.error) {
       setData(result.error.response.data);
       setOpenAlert(true);
     } else {
-      dispatch(saveSignIn(result.data));
-      result.data.role === "Admin" ? navigate("/admin") : navigate("/");
+      navigate("/sign-in");
     }
   };
 
@@ -89,7 +88,7 @@ const SignInForm = () => {
             width={80}
           />
           <Typography component="h1" variant="h4" sx={{ marginTop: 2 }}>
-            Sign in
+            Sign up
           </Typography>
           <Box
             component="form"
@@ -175,6 +174,27 @@ const SignInForm = () => {
                 />
               )}
             />
+            <Controller
+              name="role"
+              control={control}
+              render={({ field: { onChange, value, ...field } }) => (
+                <Autocomplete
+                  disablePortal
+                  options={["Student", "Teacher"]}
+                  value={value || null}
+                  onChange={(_, newValue) => onChange(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      margin="normal"
+                      label="Account Type"
+                    />
+                  )}
+                  {...field}
+                />
+              )}
+            />
+
             <Button
               type="submit"
               variant="contained"
@@ -184,14 +204,14 @@ const SignInForm = () => {
               {showCircularProgress === true ? (
                 <CircularProgress color="inherit" size={25} />
               ) : (
-                <>Sign In</>
+                <>Sign Up</>
               )}
             </Button>
             <Link
-              to="/sign-up"
+              to="/sign-in"
               style={{ color: "#1565C0", textDecoration: "none" }}
             >
-              Don't have an account?
+              Already have an account?
             </Link>
           </Box>
         </Paper>
@@ -200,4 +220,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

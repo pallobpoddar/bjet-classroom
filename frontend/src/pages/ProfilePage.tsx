@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import IState from "../interfaces/stateInterface";
 import Box from "@mui/material/Box";
@@ -18,15 +17,16 @@ const ProfilePage = () => {
   const role = useSelector((state: IState) => state.user.role);
 
   // Extract initials for Avatar
-  const initials = (name ?? "").split(" ").map(n => n[0]).join("");
+  const initials = (name ?? "")
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
 
   return (
     <Box display="flex">
       {/* Responsive Drawer */}
       <ResponsiveDrawer
-        breadcrumbs={[
-          { name: "Account", link: "/profile" },
-        ]}
+        breadcrumbs={[{ name: "Account", link: "/profile" }]}
         drawerItemIndex={0}
       />
 
@@ -39,20 +39,23 @@ const ProfilePage = () => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />  {/* Keeps content properly spaced from the drawer */}
-
+        <Toolbar /> {/* Keeps content properly spaced from the drawer */}
         {/* Profile Information Section */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: "5%" }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "center", paddingTop: "5%" }}
+        >
           <Card sx={{ maxWidth: 600, padding: 4, boxShadow: 3 }}>
             <CardContent sx={{ textAlign: "center" }}>
               {/* User Avatar */}
-              <Avatar sx={{
-                bgcolor: deepPurple[500],
-                width: 80,
-                height: 80,
-                fontSize: "2rem",
-                margin: "0 auto"
-              }}>
+              <Avatar
+                sx={{
+                  bgcolor: deepPurple[500],
+                  width: 80,
+                  height: 80,
+                  fontSize: "2rem",
+                  margin: "0 auto",
+                }}
+              >
                 {initials}
               </Avatar>
 

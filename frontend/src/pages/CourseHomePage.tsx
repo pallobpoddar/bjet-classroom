@@ -6,7 +6,6 @@ import useCourse from "../hooks/useCourse";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import IState from "../interfaces/stateInterface";
-import CourseNavigations from "../components/navigations/CourseNavigations";
 import AddIcon from "@mui/icons-material/Add";
 import TemporaryDrawer from "../components/drawers/TemporaryDrawer";
 import Button from "@mui/material/Button";
@@ -52,6 +51,7 @@ const CourseHomePage = () => {
 
     getCourseDetailsFromApi();
     getModulesFromApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleDrawer = (newOpen: boolean) => async () => {
@@ -68,9 +68,9 @@ const CourseHomePage = () => {
         breadcrumbs={
           response.success
             ? [
-              { name: response.data.title, link: `/courses/${id}` },
-              { name: "Modules", link: "" },
-            ]
+                { name: response.data.title, link: `/courses/${id}` },
+                { name: "Modules", link: "" },
+              ]
             : []
         }
         drawerItemIndex={2}
