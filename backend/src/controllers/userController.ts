@@ -59,13 +59,11 @@ class UserController {
 
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: true,
         sameSite: "strict",
         maxAge: config.accessTokenExpiration,
       });
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true,
         sameSite: "strict",
         maxAge: config.refreshTokenExpiration,
       });
