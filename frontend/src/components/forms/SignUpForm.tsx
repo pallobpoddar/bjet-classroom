@@ -15,6 +15,8 @@ import Paper from "@mui/material/Paper";
 import CustomAlert from "../alerts/CustomAlert";
 import { useNavigate, Link } from "react-router-dom";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useDispatch } from "react-redux";
+import { saveSignIn } from "../../redux/slices/userSlice";
 
 const SignUpForm = () => {
   const [showCircularProgress, setShowCircularProgress] = useState(false);
@@ -41,6 +43,7 @@ const SignUpForm = () => {
   });
 
   const { signUp } = useUser();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlerOnSubmit = async () => {
@@ -57,7 +60,8 @@ const SignUpForm = () => {
       setData(result.error.response.data);
       setOpenAlert(true);
     } else {
-      navigate("/sign-in");
+      dispatch(saveSignIn(result.data));
+      result.data.role === "Admin" ? navigate("/admin") : navigate("/");
     }
   };
 

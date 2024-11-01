@@ -75,7 +75,7 @@ const useUser = () => {
     role: string;
   }) => {
     try {
-      const response = await userInstance.post("/register", formData, {
+      const response = await userInstance.post("/signup", formData, {
         headers: {
           "Content-Type": "application/json",
         },

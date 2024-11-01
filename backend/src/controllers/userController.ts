@@ -51,6 +51,38 @@ class UserController {
     }
   };
 
+  public signUp = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password, role } = req.body;
+      await this.userService.register(email, password, role);
+
+      const { accessToken, refreshToken, id, name } =
+        await this.userService.signin(email, password);
+
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: config.accessTokenExpiration,
+      });
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: config.refreshTokenExpiration,
+      });
+
+      ResponseUtil.sendSuccess(
+        res,
+        HTTP_STATUS.CREATED,
+        "User signed up successfully",
+        { id, name, role }
+      );
+    } catch (error) {
+      ResponseUtil.sendError(res, error);
+    }
+  };
+
   public signin = async (req: Request, res: Response): Promise<void> => {
     try {
       const { email, password } = req.body;

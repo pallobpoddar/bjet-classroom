@@ -15,6 +15,7 @@ class UserRoutes {
   private initializeRoutes(): void {
     this.router.post(
       "/register",
+      authGuard(["Admin"]),
       ValidationMiddleware.validate(UserValidator.validateRegister),
       UserController.register
     );
@@ -23,6 +24,11 @@ class UserRoutes {
       ValidationMiddleware.validate(UserValidator.validateBulkRegister),
       authGuard(["Admin"]),
       UserController.bulkRegisterStudents
+    );
+    this.router.post(
+      "/signup",
+      ValidationMiddleware.validate(UserValidator.validateRegister),
+      UserController.signUp
     );
     this.router.post(
       "/signin",
