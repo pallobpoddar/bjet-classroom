@@ -21,6 +21,10 @@ class Config {
   public readonly videoDir: string;
   public readonly forgotPassLinkExpiration: number;
   public readonly frontendUrl: string;
+  public readonly awsBucket: string;
+  public readonly awsRegion: string;
+  public readonly awsAccessKeyId: string;
+  public readonly awsSecretAccessKey: string;
 
   constructor() {
     dotenv.config();
@@ -43,6 +47,10 @@ class Config {
     this.videoDir = path.join(this.uploadDir, "video");
     this.forgotPassLinkExpiration = 15 * 60;
     this.frontendUrl = process.env.FRONTEND_URL || "";
+    this.awsBucket = process.env.AWS_BUCKET || "";
+    this.awsRegion = process.env.AWS_REGION || "";
+    this.awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID || "";
+    this.awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || "";
 
     this.validateConfig();
   }

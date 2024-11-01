@@ -70,7 +70,7 @@ export const uploadToAWS = async (
 ): Promise<string> => {
   const uniqueFileName = generateUniqueFilename(file!.originalname);
   const params = {
-    Bucket: "bjet-lms",
+    Bucket: config.awsBucket,
     Key: `${file?.mimetype}/${uniqueFileName}`,
     Body: file?.buffer,
     ContentType: file?.mimetype,
@@ -83,7 +83,7 @@ export const uploadToAWS = async (
 export const deleteOneFromAWS = async (url: URL) => {
   const key = url.pathname?.slice(1);
   const params = {
-    Bucket: "bjet-lms",
+    Bucket: config.awsBucket,
     Key: key,
   };
 
@@ -93,7 +93,7 @@ export const deleteOneFromAWS = async (url: URL) => {
 export const deleteManyFromAWS = async (urls: URL[]) => {
   const keys = urls.map((url) => url.pathname?.slice(1));
   const params = {
-    Bucket: "bjet-lms",
+    Bucket: config.awsBucket,
     Delete: {
       Objects: keys.map((key) => ({ Key: key })),
       Quiet: false,

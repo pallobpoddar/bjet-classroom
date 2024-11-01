@@ -15,7 +15,10 @@ export class ModuleValidator {
       .bail()
       .isLength({ max: 200 })
       .withMessage("Title must be within 200 characters"),
-    body("lockUntil").isISO8601().withMessage("Invalid lock until date"),
+    body("lockUntil")
+      .optional()
+      .isISO8601()
+      .withMessage("Invalid lock until date"),
   ];
 
   public static validateGetAllByCourseId: ValidationChain[] = [
@@ -36,7 +39,10 @@ export class ModuleValidator {
       .bail()
       .isLength({ max: 200 })
       .withMessage("Title must be within 200 characters"),
-    body("lockUntil").isISO8601().withMessage("Invalid lock until date"),
+    body("lockUntil")
+      .optional()
+      .isISO8601()
+      .withMessage("Invalid lock until date"),
   ];
 
   public static validateDeleteOneById: ValidationChain[] = [
