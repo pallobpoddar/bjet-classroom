@@ -5,27 +5,27 @@ import config from "../config";
 import { deleteManyFromS3, deleteOneFromS3, uploadToS3 } from "./aws";
 
 // Define the upload directory and subdirectories
-const uploadDirectory = config.uploadDir;
-const pdfDirectory = config.pdfDir;
-const videoDirectory = config.videoDir;
+// const uploadDirectory = config.uploadDir;
+// const pdfDirectory = config.pdfDir;
+// const videoDirectory = config.videoDir;
 
-// Function to create directory if it doesn't exist
-const createDirectoryIfNotExists = async (dir: string) => {
-  try {
-    await fs.access(dir);
-  } catch {
-    await fs.mkdir(dir, { recursive: true });
-  }
-};
+// // Function to create directory if it doesn't exist
+// const createDirectoryIfNotExists = async (dir: string) => {
+//   try {
+//     await fs.access(dir);
+//   } catch {
+//     await fs.mkdir(dir, { recursive: true });
+//   }
+// };
 
-// Initialize directories
-(async () => {
-  await Promise.all([
-    createDirectoryIfNotExists(uploadDirectory),
-    createDirectoryIfNotExists(pdfDirectory),
-    createDirectoryIfNotExists(videoDirectory),
-  ]);
-})();
+// // Initialize directories
+// (async () => {
+//   await Promise.all([
+//     createDirectoryIfNotExists(uploadDirectory),
+//     createDirectoryIfNotExists(pdfDirectory),
+//     createDirectoryIfNotExists(videoDirectory),
+//   ]);
+// })();
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();

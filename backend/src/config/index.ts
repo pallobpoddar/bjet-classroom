@@ -46,9 +46,9 @@ class Config {
     this.emailPort = process.env.EMAIL_PORT || "";
     this.emailUser = process.env.EMAIL_USER || "";
     this.emailPass = process.env.EMAIL_PASS || "";
-    this.uploadDir = path.join(__dirname, "../../uploads");
-    this.pdfDir = path.join(this.uploadDir, "pdf");
-    this.videoDir = path.join(this.uploadDir, "video");
+    this.uploadDir = "";
+    this.pdfDir = "";
+    this.videoDir = "";
     this.forgotPassLinkExpiration = 15 * 60;
     this.frontendUrl = process.env.FRONTEND_URL || "";
     this.awsBucket = process.env.AWS_BUCKET || "";
@@ -65,8 +65,7 @@ class Config {
       !this.mongoUri ||
       !this.jwtSecret ||
       !this.refreshTokenSecret ||
-      !this.redisHost ||
-      !this.uploadDir
+      !this.redisHost
     ) {
       throw new Error("Missing required environment variables");
     }
