@@ -16,7 +16,7 @@ import lessonRoutes from "./routes/lessonRoutes";
 import moduleRoutes from "./routes/moduleRoutes";
 
 class App {
-  private express: express.Application;
+  public express: express.Application;
   private database: Database;
 
   constructor() {
@@ -33,7 +33,12 @@ class App {
     this.express.use(cookieParser());
     this.express.use(requestLogger);
     this.express.use(
-      cors({ origin: "http://localhost:5173", credentials: true })
+      cors({
+        origin: "https://bjet-classroom.vercel.app",
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        credentials: true,
+      })
     );
   }
 
@@ -55,10 +60,11 @@ class App {
       await this.database.connect();
       await connectRedis();
       await startEmailService();
+      logger.info("Services connected successfully.");
 
-      this.express.listen(config.port, () => {
-        logger.info(`Server is running on port ${config.port}`);
-      });
+      // this.express.listen(config.port, () => {
+      //   logger.info(`Server is running on port ${config.port}`);
+      // });
     } catch (error) {
       logger.error("Failed to start the server", error);
       throw error;
@@ -70,4 +76,12 @@ class App {
   }
 }
 
-export default new App();
+// export default new App();
+
+const appInstance = new App();
+appInstance.start().catch((error) => {
+  logger.error("Failed to start app instance", error);
+  process.exit(1);
+});
+
+export default appInstance.express;

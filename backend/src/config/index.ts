@@ -6,7 +6,9 @@ class Config {
   public readonly mongoUri: string;
   public readonly jwtSecret: string;
   public readonly refreshTokenSecret: string;
-  public readonly redisUrl: string;
+  public readonly redisHost: string;
+  public readonly redisPort: number;
+  public readonly redisPassword: string;
   public readonly accessTokenExpiration: number;
   public readonly refreshTokenExpiration: number;
   public readonly maxInvalidLoginAttempts: number;
@@ -32,7 +34,9 @@ class Config {
     this.mongoUri = process.env.MONGO_URI || "";
     this.jwtSecret = process.env.JWT_SECRET || "";
     this.refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || "";
-    this.redisUrl = process.env.REDIS_URL || "";
+    this.redisHost = process.env.REDIS_HOST || "";
+    this.redisPort = parseInt(process.env.REDIS_PORT || "6379", 10);
+    this.redisPassword = process.env.REDIS_PASSWORD || "";
     this.refreshTokenExpiration = 7 * 24 * 60 * 60 * 1000;
     this.accessTokenExpiration = 15 * 60 * 1000;
     this.maxInvalidLoginAttempts = 5;
@@ -61,7 +65,7 @@ class Config {
       !this.mongoUri ||
       !this.jwtSecret ||
       !this.refreshTokenSecret ||
-      !this.redisUrl ||
+      !this.redisHost ||
       !this.uploadDir
     ) {
       throw new Error("Missing required environment variables");

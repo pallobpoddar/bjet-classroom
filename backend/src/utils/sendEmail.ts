@@ -6,7 +6,9 @@ import { logger } from "./logger";
 const MAX_RETRIES = 5;
 const RETRY_INTERVAL = 5000;
 
-async function connectWithRetry(retries = MAX_RETRIES) {
+async function connectWithRetry(
+  retries = MAX_RETRIES
+): Promise<amqp.Connection> {
   try {
     const connection = await amqp.connect(config.rabbitMQUrl);
 
@@ -41,7 +43,7 @@ export async function startEmailService() {
       },
     } as nodemailer.TransportOptions);
 
-    channel.consume("emailQueue", async (msg) => {
+    channel.consume("emailQueue", async (msg: amqp.ConsumeMessage | null) => {
       if (msg !== null) {
         const emailMessage = JSON.parse(msg.content.toString());
         try {
